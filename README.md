@@ -1,1 +1,23 @@
+![](https://img.shields.io/badge/status-WORK%20IN%20PROGRESS-red)
+
 # StockSim
+
+Uma API que estou construíndo para propósitos de estudos, juntando duas coisas que eu gosto muito, o mercado de renda variável e programação.
+
+## Objetivo
+
+Essa api tem como por objetivo ralizar a simulação de compras e vendas de ativos, para alcançar o objetivo desejado, irei utilizar uma API externa para acompanhar a cotação da  bolsa, por enquanto a api será a <a href="https://hgbrasil.com/">HG BRASIL<a/>, essa API permite realizar 400 request por dia, portanto o acompanhamento dos ativos precisam ser bem distribuídos, não será feito em tempo real.
+  
+## Tecnologias Utilizadas
+<ol>
+  <li><a href="https://spring.io/projects/spring-boot">Spring Boot</a></li>
+  <li><a href="https://spring.io/projects/spring-data-jpa">Spring JPA</a></li>
+  <li><a href="http://modelmapper.org/">ModelMapper</a></li>
+  <li><a href="https://projectlombok.org/">Lombok</a></li>
+  <li><a href="https://www.postgresql.org/">PostgreSQL</a></li>
+  <li><a href="https://www.docker.com/">Docker</a></li>
+</ol>
+
+## Utilizando API
+__/api/v1/user__  
+* POST: Cria um usuário. Deve ser enviado um request no formato JSON, contendo os campos: "email", "password", "firstName" e "lastName", sendo este último opcional.
