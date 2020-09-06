@@ -36,7 +36,7 @@ public class UserDTO {
         validationErros = new HashMap<>();
         boolean isValid = true;
 
-        if(StringStockUtils.isNullOrEmptyOrWhiteSpace(email)) {
+        if(StringStockUtils.isNullOrEmptyOrOnlyWhiteSpace(email)) {
             validationErros.put("email", "Email is Empty");
             isValid = false;
         }
@@ -44,11 +44,11 @@ public class UserDTO {
             validationErros.put("email", "Email is invalid");
             isValid = false;
         }
-        else if(StringStockUtils.isNullOrEmptyOrWhiteSpace(password)) {
+        else if(StringStockUtils.isNullOrEmptyOrOnlyWhiteSpace(password)) {
             validationErros.put("password", "Password Is Empty");
             isValid = false;
         }
-        else  if(StringStockUtils.isNullOrEmptyOrWhiteSpace(firstName)) {
+        else  if(StringStockUtils.isNullOrEmptyOrOnlyWhiteSpace(firstName)) {
             validationErros.put("firstName", "FirstName is Empty");
             isValid = false;
         }

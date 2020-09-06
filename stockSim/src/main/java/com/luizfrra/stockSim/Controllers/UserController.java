@@ -18,6 +18,9 @@ public class UserController {
     @Autowired
     public UserService userService;
 
+    @Autowired
+    public ModelMapper modelMapper;
+
     @GetMapping
     public String hello() {
         return "hello";
@@ -28,7 +31,6 @@ public class UserController {
         if(!userDto.isValide())
             return new ResponseEntity(new UserInvalidFieldsResponse(userDto.getValidationErros()), HttpStatus.resolve(400));
 
-        ModelMapper modelMapper = new ModelMapper();
         UserDomain user = modelMapper.map(userDto, UserDomain.class);
         userDto.cleanCredentials();
 
