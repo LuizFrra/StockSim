@@ -6,7 +6,7 @@ Uma API que estou construíndo para propósitos de estudos, juntando duas coisas
 
 ## Objetivo
 
-Essa api tem como por objetivo ralizar a simulação de compras e vendas de ativos, para alcançar o objetivo desejado, irei utilizar uma API externa para acompanhar a cotação da  bolsa, por enquanto a api será a <a href="https://hgbrasil.com/">HG BRASIL<a/>, essa API permite realizar 400 request por dia, portanto o acompanhamento dos ativos precisam ser bem distribuídos, não será feito em tempo real.
+Essa api tem como por objetivo ralizar a simulação de compras e vendas de ativos, para alcançar o objetivo desejado, irei utilizar uma API externa para acompanhar a cotação da  bolsa, por enquanto a api será a <a href="https://hgbrasil.com/">HG BRASIL<a/>, essa API permite realizar 400 request por dia, portanto o acompanhamento dos ativos precisam ser bem distribuídos, impedindo que seja realizado em tempo real.
   
 ## Tecnologias Utilizadas
 <ol>
