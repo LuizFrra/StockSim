@@ -1,4 +1,4 @@
-package com.luizfrra.stockSim.EntitiesDomain;
+package com.luizfrra.stockSim.EntitiesDomain.User;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -8,10 +8,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "tbl_user")
+@Table(name = "tbl_users")
 @Getter
 @Setter
-public class UserDomain {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -37,9 +37,9 @@ public class UserDomain {
     @Column(columnDefinition = "boolean default true")
     private boolean isActive = true;
 
-    protected UserDomain() {}
+    protected User() {}
 
-    public UserDomain(String firstName, String lastName, String email, String password) {
+    public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
