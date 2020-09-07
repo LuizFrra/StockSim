@@ -43,7 +43,7 @@ public class QuoteController {
 
     @GetMapping(path = "/{symbol}")
     public ResponseEntity get(@PathVariable String symbol) {
-        Optional<Quote> quote = quoteService.findBySymbol(symbol);
+        Optional<Quote> quote = quoteService.findAndUpdateQuoteBySymbol(symbol);
 
         if(quote.isEmpty())
             return new ResponseEntity(new QuoteResponse("Quote Not Found", symbol), HttpStatus.NOT_FOUND);
