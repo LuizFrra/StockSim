@@ -1,7 +1,7 @@
-package com.luizfrra.stockSim.Services;
+package com.luizfrra.stockSim.Services.User;
 
-import com.luizfrra.stockSim.EntitiesDomain.UserDomain;
-import com.luizfrra.stockSim.Repositories.UserRepository;
+import com.luizfrra.stockSim.EntitiesDomain.User.User;
+import com.luizfrra.stockSim.Repositories.User.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,11 +21,11 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public UserDomain save(UserDomain user) {
+    public User save(User user) {
 
-        if(userRepository.findByEmail(user.getEmail()) == null) {
+        if(userRepository.findByEmail(user.getEmail()).isEmpty()) {
             user.encodePassword(passwordEncoder);
-            UserDomain userSaved = userRepository.save(user);
+            User userSaved = userRepository.save(user);
             userSaved.clearCredentials();
             return userSaved;
         }

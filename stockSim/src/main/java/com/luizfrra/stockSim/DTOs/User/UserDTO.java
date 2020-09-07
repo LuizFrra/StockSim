@@ -1,4 +1,4 @@
-package com.luizfrra.stockSim.DTOs;
+package com.luizfrra.stockSim.DTOs.User;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.luizfrra.stockSim.Utils.StringStockUtils;
