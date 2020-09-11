@@ -22,6 +22,9 @@ Essa api tem como por objetivo realizar a simulação de compras e vendas de ati
 __/api/v1/user__  
 * POST: Cria um usuário. Deve ser enviado um request no formato JSON, contendo os campos: "email", "password", "firstName" e "lastName", sendo este último opcional.
 
+__/api/v1/user/{id}__  
+* GET: Busca pelo o usuário através do ID passado por parâmetro na URL.
+
 __/api/v1/quote__  
 * POST: Adiciona uma ação. Deve ser enviado um request no formato JSON, contendo o campo: "symbol", que corresponde ao ticket da ação a ser adicionado, exemplo: MGLU3, ITUB4 ...
 

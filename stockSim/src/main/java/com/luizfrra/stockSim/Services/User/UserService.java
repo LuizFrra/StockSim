@@ -2,13 +2,16 @@ package com.luizfrra.stockSim.Services.User;
 
 import com.luizfrra.stockSim.EntitiesDomain.User.User;
 import com.luizfrra.stockSim.Repositories.User.UserRepository;
+import com.luizfrra.stockSim.Services.Commons.IBaseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
-public class UserService {
+public class UserService implements IBaseService<User, String> {
 
     private final UserRepository userRepository;
 
@@ -19,6 +22,11 @@ public class UserService {
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    @Override
+    public Optional<User> findById(String id) {
+        return userRepository.findById(Long.parseLong(id));
     }
 
     public User save(User user) {

@@ -1,6 +1,7 @@
 package com.luizfrra.stockSim.DTOs.User;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.luizfrra.stockSim.DTOs.Commons.CommonDTO;
 import com.luizfrra.stockSim.Utils.StringStockUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +14,7 @@ import java.util.HashMap;
 @NoArgsConstructor
 @Setter
 @Getter
-public class UserDTO {
+public class UserDTO extends CommonDTO {
 
     private String email;
 
@@ -25,11 +26,6 @@ public class UserDTO {
 
     @JsonIgnore
     HashMap<String, String> validationErros;
-
-    @JsonIgnore
-    public void cleanCredentials() {
-        password = "";
-    }
 
     @JsonIgnore
     public boolean isValide() {

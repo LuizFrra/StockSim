@@ -3,6 +3,7 @@ package com.luizfrra.stockSim.Services.Quote;
 import com.luizfrra.stockSim.EntitiesDomain.Quote.Quote;
 import com.luizfrra.stockSim.HGBrasil.HGAPIConsumer;
 import com.luizfrra.stockSim.Repositories.Quote.QuoteRepository;
+import com.luizfrra.stockSim.Services.Commons.IBaseService;
 import com.luizfrra.stockSim.Utils.DateStockUtils;
 import com.luizfrra.stockSim.Utils.StringStockUtils;
 import org.slf4j.Logger;
@@ -13,7 +14,7 @@ import java.time.Instant;
 import java.util.Optional;
 
 @Service
-public class QuoteService {
+public class QuoteService implements IBaseService<Quote, String> {
 
     private final QuoteRepository quoteRepository;
 
@@ -26,24 +27,24 @@ public class QuoteService {
         this.hgapiConsumer = hgapiConsumer;
     }
 
-    public Quote save(String symbol) {
-        Optional<Quote> quoteDb = findBySymbol(symbol);
+    public Quote save(Quote quote) {
+        Optional<Quote> quoteDb = quoteRepository.findBySymbol(quote.getSymbol());
 
-        if(quoteDb.isEmpty() && !StringStockUtils.isNullOrEmptyOrOnlyWhiteSpace(symbol)) {
-            Quote quote = hgapiConsumer.getQuote(symbol);
-            Quote saved = quoteRepository.save(quote);
+        if(quoteDb.isEmpty() && !StringStockUtils.isNullOrEmptyOrOnlyWhiteSpace(quote.getSymbol())) {
+            Quote quoteResult = hgapiConsumer.getQuote(quote.getSymbol());
+            Quote saved = quoteRepository.save(quoteResult);
             return saved;
         }
 
         return null;
     }
 
-    public Optional<Quote> findBySymbol(String symbol) {
-        return quoteRepository.findBySymbol(symbol.toUpperCase());
+    public Optional<Quote> findById(String symbol) {
+        return findAndUpdateQuoteBySymbol(symbol.toUpperCase());
     }
 
-    public Optional<Quote> findAndUpdateQuoteBySymbol(String symbol) {
-        Optional<Quote> quoteOptional = findBySymbol(symbol);
+    private Optional<Quote> findAndUpdateQuoteBySymbol(String symbol) {
+        Optional<Quote> quoteOptional = quoteRepository.findBySymbol(symbol);
 
         if(quoteOptional.isEmpty())
             return Optional.empty();
