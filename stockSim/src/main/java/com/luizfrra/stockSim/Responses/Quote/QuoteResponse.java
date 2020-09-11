@@ -1,10 +1,10 @@
 package com.luizfrra.stockSim.Responses.Quote;
 
-import lombok.AllArgsConstructor;
+import com.luizfrra.stockSim.Responses.Commons.ObjectResponse;
 
-@AllArgsConstructor
-public class QuoteResponse {
-    public String message;
+public class QuoteResponse extends ObjectResponse {
 
-    public Object quote;
+    public QuoteResponse(String message, Object data) {
+        super(message, data);
+    }
 }

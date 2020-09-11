@@ -1,6 +1,7 @@
 package com.luizfrra.stockSim.DTOs.Quote;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.luizfrra.stockSim.DTOs.Commons.CommonDTO;
 import com.luizfrra.stockSim.Utils.StringStockUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +15,7 @@ import java.util.HashMap;
 @NoArgsConstructor
 @Getter
 @Setter
-public class QuoteDTO {
+public class QuoteDTO extends CommonDTO {
 
     public String symbol;
 
