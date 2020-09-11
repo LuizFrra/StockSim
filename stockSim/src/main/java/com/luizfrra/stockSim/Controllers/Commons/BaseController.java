@@ -1,12 +1,9 @@
 package com.luizfrra.stockSim.Controllers.Commons;
 
-import com.luizfrra.stockSim.Controllers.Quote.QuoteController;
 import com.luizfrra.stockSim.DTOs.Commons.CommonDTO;
-import com.luizfrra.stockSim.Responses.Commons.InvalidFieldsResponse;
-import com.luizfrra.stockSim.Responses.Commons.ObjectResponse;
-import com.luizfrra.stockSim.Responses.Quote.QuoteResponse;
+import com.luizfrra.stockSim.Responses.InvalidFieldsResponse;
+import com.luizfrra.stockSim.Responses.ObjectResponse;
 import com.luizfrra.stockSim.Services.Commons.IBaseService;
-import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

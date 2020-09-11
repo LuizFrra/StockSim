@@ -1,4 +1,4 @@
-package com.luizfrra.stockSim.Responses.Commons;
+package com.luizfrra.stockSim.Responses;
 
 public class ObjectResponse {
     public String message;

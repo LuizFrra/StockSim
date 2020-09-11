@@ -1,4 +1,4 @@
-package com.luizfrra.stockSim.Responses.Commons;
+package com.luizfrra.stockSim.Responses;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
