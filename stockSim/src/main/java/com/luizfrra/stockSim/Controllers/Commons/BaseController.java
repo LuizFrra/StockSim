@@ -51,6 +51,11 @@ public abstract class BaseController<C, R extends CommonDTO> {
         return new ResponseEntity(new ObjectResponse("Data Found", data.get()), HttpStatus.OK);
     }
 
+    @GetMapping
+    public ResponseEntity getAll() {
+        return new ResponseEntity(new ObjectResponse("All Data", baseService.findAll()), HttpStatus.OK);
+    }
+
     public abstract C convertFromDtoToMain(R dto);
 
     public abstract R convertFromMainToDto(C data);

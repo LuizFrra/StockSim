@@ -1,11 +1,13 @@
 package com.luizfrra.stockSim.EntitiesDomain.User;
 
+import com.luizfrra.stockSim.EntitiesDomain.UserQuotes.UserQuotes;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "tbl_users")
@@ -36,6 +38,12 @@ public class User {
 
     @Column(columnDefinition = "boolean default true")
     private boolean isActive = true;
+
+    @OneToMany(mappedBy = "user")
+    Set<UserQuotes> quotes;
+
+    @Version
+    private Integer version;
 
     protected User() {}
 

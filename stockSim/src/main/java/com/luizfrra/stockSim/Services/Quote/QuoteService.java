@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,6 +29,7 @@ public class QuoteService implements IBaseService<Quote, String> {
         this.hgapiConsumer = hgapiConsumer;
     }
 
+    @Override
     public Quote save(Quote quote) {
         Optional<Quote> quoteDb = quoteRepository.findBySymbol(quote.getSymbol());
 
@@ -39,6 +42,7 @@ public class QuoteService implements IBaseService<Quote, String> {
         return null;
     }
 
+    @Override
     public Optional<Quote> findById(String symbol) {
         return findAndUpdateQuoteBySymbol(symbol.toUpperCase());
     }
@@ -62,5 +66,13 @@ public class QuoteService implements IBaseService<Quote, String> {
         Quote quoteUpdated = quoteRepository.save(quote);
 
         return Optional.of(quoteUpdated);
+    }
+
+    @Override
+    public List<Quote> findAll() {
+        List<Quote> listOfQuote = new ArrayList<>();
+        Iterable<Quote> iteradorQuotes = quoteRepository.findAll();
+        iteradorQuotes.forEach(listOfQuote::add);
+        return listOfQuote;
     }
 }
