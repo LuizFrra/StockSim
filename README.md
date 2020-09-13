@@ -18,15 +18,26 @@ Essa api tem como por objetivo realizar a simulação de compras e vendas de ati
   <li><a href="https://www.docker.com/">Docker</a></li>
 </ol>
 
-## Utilizando API
+# Utilizando API
+
+## Endpoints para usuários
+
 __/api/v1/user__  
 * POST: Cria um usuário. Deve ser enviado um request no formato JSON, contendo os campos: "email", "password", "firstName" e "lastName", sendo este último opcional.
 
 __/api/v1/user/{id}__  
 * GET: Busca pelo o usuário através do ID passado por parâmetro na URL.
 
+__/api/v1/user/__
+* GET: Obtém todos os usuários do banco de dados.
+
+## Endpoints para as ações
+
 __/api/v1/quote__  
-* POST: Adiciona uma ação. Deve ser enviado um request no formato JSON, contendo o campo: "symbol", que corresponde ao ticket da ação a ser adicionado, exemplo: MGLU3, ITUB4 ...
+* POST: Adiciona uma ação. Deve ser enviado um request no formato JSON, contendo o campo: "symbol", que corresponde ao ticket da ação a ser adicionado, exemplo: MGLU3, ITUB4.
 
 __/api/v1/quote/{symbol}__  
 * GET: Busca pela a ação passado por parâmetro na URL.
+
+__/api/v1/quote/__
+* GET: Busca por todas as ações no banco de dados.
