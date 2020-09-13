@@ -1,12 +1,9 @@
 package com.luizfrra.stockSim.Controllers.Commons;
 
-import com.luizfrra.stockSim.Controllers.Quote.QuoteController;
 import com.luizfrra.stockSim.DTOs.Commons.CommonDTO;
-import com.luizfrra.stockSim.Responses.Commons.InvalidFieldsResponse;
-import com.luizfrra.stockSim.Responses.Commons.ObjectResponse;
-import com.luizfrra.stockSim.Responses.Quote.QuoteResponse;
+import com.luizfrra.stockSim.Responses.InvalidFieldsResponse;
+import com.luizfrra.stockSim.Responses.ObjectResponse;
 import com.luizfrra.stockSim.Services.Commons.IBaseService;
-import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -52,6 +49,11 @@ public abstract class BaseController<C, R extends CommonDTO> {
             return new ResponseEntity(new ObjectResponse("Data Not Found", id), HttpStatus.NOT_FOUND);
 
         return new ResponseEntity(new ObjectResponse("Data Found", data.get()), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity getAll() {
+        return new ResponseEntity(new ObjectResponse("All Data", baseService.findAll()), HttpStatus.OK);
     }
 
     public abstract C convertFromDtoToMain(R dto);
