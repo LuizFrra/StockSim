@@ -54,6 +54,14 @@ public class User {
         this.password = password;
     }
 
+    public double debitQuote(double value, int quantity) {
+        double totalDebit = value * quantity;
+        if(cash - totalDebit >= 0) {
+            cash = cash - totalDebit;
+        }
+        return cash;
+    }
+
     public void encodePassword(PasswordEncoder passwordEncoder) {
         password = passwordEncoder.encode(password);
     }

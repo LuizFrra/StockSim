@@ -1,5 +1,6 @@
 package com.luizfrra.stockSim.DTOs.UserQuotes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.luizfrra.stockSim.DTOs.Commons.CommonDTO;
 import com.luizfrra.stockSim.Utils.StringStockUtils;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ public class UserQuotesDTO extends CommonDTO {
 
     public  int quantity;
 
+    @JsonIgnore
     @Override
     public boolean isValide() {
         validationErros = new HashMap<>();
