@@ -6,6 +6,7 @@ import com.luizfrra.stockSim.DTOs.UserQuotes.UserQuotesDTO;
 import com.luizfrra.stockSim.EntitiesDomain.User.User;
 import com.luizfrra.stockSim.EntitiesDomain.UserQuotes.UserQuotes;
 import com.luizfrra.stockSim.EntitiesDomain.UserQuotes.UserQuotesKey;
+import com.luizfrra.stockSim.Responses.InvalidFieldsResponse;
 import com.luizfrra.stockSim.Services.User.UserService;
 import com.luizfrra.stockSim.Services.UserQuotes.UserQuotesService;
 import org.modelmapper.ModelMapper;
@@ -30,6 +31,10 @@ public class UserController extends BaseController<User, UserDTO> {
 
     @PostMapping("/{id}/buyquote")
     public ResponseEntity buyQuote(UserQuotesDTO userQuotesDTO) {
+
+        if(!userQuotesDTO.isValide())
+            return new ResponseEntity(new InvalidFieldsResponse(userQuotesDTO.getValidationErros()), HttpStatus.BAD_REQUEST);
+
         UserQuotes userQuotes = new UserQuotes();
         userQuotes.setId(new UserQuotesKey(userQuotesDTO.userId, userQuotesDTO.getSymbol()));
         userQuotes.setNumberOfQuotes(userQuotesDTO.quantity);

@@ -22,7 +22,6 @@ public class UserQuotesDTO extends CommonDTO {
     public  int quantity;
 
     @JsonIgnore
-    @Override
     public boolean isValide() {
         validationErros = new HashMap<>();
         boolean isValide = true;
