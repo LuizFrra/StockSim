@@ -1,6 +1,6 @@
 ![](https://img.shields.io/badge/status-WORK%20IN%20PROGRESS-red)
 
-![CircleCI](https://circleci.com/gh/LuizFrra/StockSim.svg?style=shield&circle-token=ada2fcfa87f14d394f638a07a21e24477e3d31aa)(https://circleci.com/gh/LuizFrra/StockSim)
+[![CircleCI](https://circleci.com/gh/LuizFrra/StockSim.svg?style=shield&circle-token=ada2fcfa87f14d394f638a07a21e24477e3d31aa)](https://circleci.com/gh/LuizFrra/StockSim)
 
 # StockSim
 
