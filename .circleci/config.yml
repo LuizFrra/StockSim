@@ -23,7 +23,7 @@ jobs:
 
     steps:
       - checkout
-          path: ~/StockSim/stockSim
+          path: ~/StockSim
 
       # Download and cache dependencies
       - restore_cache:
