@@ -23,6 +23,7 @@ jobs:
 
     steps:
       - checkout
+          path: ~/StockSim/stockSim
 
       # Download and cache dependencies
       - restore_cache:
@@ -31,7 +32,7 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: chmod u+x ~/StockSim/gradlew
+      - run: chmod u+x gradlew
 
       - run: ./gradlew dependencies
 
