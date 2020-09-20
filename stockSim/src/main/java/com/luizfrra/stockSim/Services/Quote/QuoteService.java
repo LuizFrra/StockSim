@@ -6,6 +6,7 @@ import com.luizfrra.stockSim.Repositories.Quote.QuoteRepository;
 import com.luizfrra.stockSim.Services.Commons.IBaseService;
 import com.luizfrra.stockSim.Utils.DateStockUtils;
 import com.luizfrra.stockSim.Utils.StringStockUtils;
+import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -30,13 +31,17 @@ public class QuoteService implements IBaseService<Quote, String> {
     }
 
     @Override
-    public Quote save(Quote quote) {
+    public Quote save(Quote quote) throws Exception {
         Optional<Quote> quoteDb = quoteRepository.findBySymbol(quote.getSymbol());
 
         if(quoteDb.isEmpty() && !StringStockUtils.isNullOrEmptyOrOnlyWhiteSpace(quote.getSymbol())) {
             Quote quoteResult = hgapiConsumer.getQuote(quote.getSymbol());
-            Quote saved = quoteRepository.save(quoteResult);
-            return saved;
+            try {
+                Quote saved = quoteRepository.save(quoteResult);
+                return saved;
+            } catch (ConstraintViolationException ex) {
+                throw new Exception("Data Already Exist");
+            }
         }
 
         return null;

@@ -30,10 +30,16 @@ public abstract class BaseController<C, R extends CommonDTO> {
         if(!dto.isValide())
             return new ResponseEntity(new InvalidFieldsResponse(dto.getValidationErros()), HttpStatus.BAD_REQUEST);
 
-        C data = (C) baseService.save(convertFromDtoToMain(dto));
+        C data = null;
+        try {
+            data = (C) baseService.save(convertFromDtoToMain(dto));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity(new ObjectResponse("Data Already Exist", dto), HttpStatus.CONFLICT);
+        }
 
         if(data == null)
-            return new ResponseEntity(new ObjectResponse("Data Already Exist.", dto), HttpStatus.CONFLICT);
+            return new ResponseEntity(new ObjectResponse("Data Cannot Be Saved", dto), HttpStatus.CONFLICT);
 
         dto = convertFromMainToDto(data);
 
@@ -41,7 +47,7 @@ public abstract class BaseController<C, R extends CommonDTO> {
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity get(@PathVariable String id) {
+    public ResponseEntity getById(@PathVariable String id) {
         Optional<C> data = baseService.findById(id);
 
         if(data.isEmpty())
