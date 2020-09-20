@@ -4,11 +4,14 @@ import com.luizfrra.stockSim.EntitiesDomain.User.User;
 import com.luizfrra.stockSim.EntitiesDomain.UserQuotes.UserQuotes;
 import com.luizfrra.stockSim.Repositories.User.UserRepository;
 import com.luizfrra.stockSim.Services.Commons.IBaseService;
+import net.bytebuddy.implementation.bytecode.Throw;
+import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,13 +36,17 @@ public class UserService implements IBaseService<User, String> {
     }
 
     @Override
-    public User save(User user) {
+    public User save(User user) throws Exception {
 
         if(userRepository.findByEmail(user.getEmail()).isEmpty()) {
             user.encodePassword(passwordEncoder);
-            User userSaved = userRepository.save(user);
-            userSaved.clearCredentials();
-            return userSaved;
+            try {
+                User userSaved = userRepository.save(user);
+                userSaved.clearCredentials();
+                return userSaved;
+            } catch (ConstraintViolationException ex) {
+                throw new Exception("Data Already Exist");
+            }
         }
 
         return null;

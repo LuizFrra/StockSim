@@ -7,7 +7,7 @@ public interface IBaseService<C, T> {
 
     Optional<C> findById(T id);
 
-    C save(C data);
+    C save(C data) throws Exception;
 
     List<C> findAll();
 
