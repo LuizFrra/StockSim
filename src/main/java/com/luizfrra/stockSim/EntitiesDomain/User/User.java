@@ -56,10 +56,7 @@ public class User {
 
     public double debitQuote(double value, int quantity) {
         double totalDebit = value * quantity;
-        if(cash - totalDebit >= 0) {
-            cash = cash - totalDebit;
-        }
-        return cash;
+        return cash - totalDebit;
     }
 
     public void encodePassword(PasswordEncoder passwordEncoder) {

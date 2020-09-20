@@ -5,6 +5,7 @@ import com.luizfrra.stockSim.Responses.InvalidFieldsResponse;
 import com.luizfrra.stockSim.Responses.ObjectResponse;
 import com.luizfrra.stockSim.Services.Commons.IBaseService;
 import io.swagger.annotations.Api;
+import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,7 @@ public abstract class BaseController<C, R extends CommonDTO> {
         C data = null;
         try {
             data = (C) baseService.save(convertFromDtoToMain(dto));
-        } catch (Exception e) {
+        } catch (ConstraintViolationException e) {
             e.printStackTrace();
             return new ResponseEntity(new ObjectResponse("Data Already Exist", dto), HttpStatus.CONFLICT);
         }

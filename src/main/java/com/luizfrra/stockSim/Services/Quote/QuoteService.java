@@ -31,7 +31,7 @@ public class QuoteService implements IBaseService<Quote, String> {
     }
 
     @Override
-    public Quote save(Quote quote) throws Exception {
+    public Quote save(Quote quote) throws ConstraintViolationException {
         Optional<Quote> quoteDb = quoteRepository.findBySymbol(quote.getSymbol());
 
         if(quoteDb.isEmpty() && !StringStockUtils.isNullOrEmptyOrOnlyWhiteSpace(quote.getSymbol())) {
@@ -40,7 +40,7 @@ public class QuoteService implements IBaseService<Quote, String> {
                 Quote saved = quoteRepository.save(quoteResult);
                 return saved;
             } catch (ConstraintViolationException ex) {
-                throw new Exception("Data Already Exist");
+                throw new ConstraintViolationException("Data Already Exist", ex.getSQLException(), ex.getConstraintName());
             }
         }
 

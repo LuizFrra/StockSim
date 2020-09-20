@@ -33,7 +33,7 @@ public class UserService implements IBaseService<User, String> {
     }
 
     @Override
-    public User save(User user) throws Exception {
+    public User save(User user) throws ConstraintViolationException {
 
         if(userRepository.findByEmail(user.getEmail()).isEmpty()) {
             user.encodePassword(passwordEncoder);
@@ -42,7 +42,7 @@ public class UserService implements IBaseService<User, String> {
                 userSaved.clearCredentials();
                 return userSaved;
             } catch (ConstraintViolationException ex) {
-                throw new Exception("Data Already Exist");
+                throw new ConstraintViolationException("Data Already Exist", ex.getSQLException(), ex.getConstraintName());
             }
         }
 
