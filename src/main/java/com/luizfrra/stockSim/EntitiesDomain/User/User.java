@@ -1,9 +1,7 @@
 package com.luizfrra.stockSim.EntitiesDomain.User;
 
 import com.luizfrra.stockSim.EntitiesDomain.UserQuotes.UserQuotes;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
@@ -13,6 +11,8 @@ import java.util.Set;
 @Table(name = "tbl_users")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -45,7 +45,7 @@ public class User {
     @Version
     private Integer version;
 
-    protected User() {}
+    //protected User() {}
 
     public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;

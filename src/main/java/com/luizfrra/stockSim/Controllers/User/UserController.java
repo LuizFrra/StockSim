@@ -30,7 +30,7 @@ public class UserController extends BaseController<User, UserDTO> {
     }
 
     @PostMapping("/{id}/buyquote")
-    public ResponseEntity buyQuote(UserQuotesDTO userQuotesDTO) {
+    public ResponseEntity buyQuote(@RequestBody UserQuotesDTO userQuotesDTO) {
 
         if(!userQuotesDTO.isValide())
             return new ResponseEntity(new InvalidFieldsResponse(userQuotesDTO.getValidationErros()), HttpStatus.BAD_REQUEST);

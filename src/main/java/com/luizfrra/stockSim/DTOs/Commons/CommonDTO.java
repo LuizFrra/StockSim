@@ -10,6 +10,8 @@ import java.util.HashMap;
 @Setter
 public abstract class CommonDTO {
 
+    private int id;
+
     @JsonIgnore
     public HashMap<String, String> validationErros;
 
