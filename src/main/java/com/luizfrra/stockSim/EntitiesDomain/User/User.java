@@ -43,4 +43,9 @@ public class User {
         return cash;
     }
 
+    public double creditQuote(double value, int quantity) {
+        double earn = value * quantity;
+        cash += earn;
+        return cash;
+    }
 }

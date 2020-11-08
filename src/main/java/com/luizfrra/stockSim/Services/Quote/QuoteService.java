@@ -64,7 +64,7 @@ public class QuoteService implements IBaseService<Quote, String> {
         Instant quoteUpdatedAt = quote.getUpdatedAt().toInstant();
         long secondsPassed = utcNow.getEpochSecond() - quoteUpdatedAt.getEpochSecond();
 
-        if(secondsPassed <= 3600 || !DateStockUtils.isBusinessHour(utcNow) || !DateStockUtils.isWeekDay(utcNow))
+        if(secondsPassed <= DateStockUtils.CACHE_QUOTE_FOR_SECONDS || !DateStockUtils.isBusinessHour(utcNow) || !DateStockUtils.isWeekDay(utcNow))
             return quoteOptional;
 
         quote = hgapiConsumer.getQuote(symbol);

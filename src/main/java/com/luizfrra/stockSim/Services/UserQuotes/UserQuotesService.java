@@ -68,4 +68,37 @@ public class UserQuotesService implements IBaseService<UserQuotes, String> {
         iteradorUserQuotes.forEach(listOfUserQuotes::add);
         return listOfUserQuotes;
     }
+
+    public UserQuotes sellQuote(UserQuotes data) {
+
+        String symbol = data.getId().getQuotedId();
+        Quote quote = (Quote) quoteService.findById(symbol).get();
+        User seller = userService.findById(data.getId().getUserId()).get();
+
+        UserQuotes currentDataQuote = null;
+
+        List<UserQuotes> userDataQuotes = seller.getQuotes().stream().filter(p -> p.getId().getQuotedId().equals(symbol))
+                .collect(Collectors.toList());
+
+        if(userDataQuotes.size() == 1) currentDataQuote = userDataQuotes.get(0);
+
+        int currentNumberOfQuotes = currentDataQuote != null ? currentDataQuote.getNumberOfQuotes() : 0;
+        double currentAveragePrice = currentDataQuote != null ? currentDataQuote.getAveragePrice() : 0;
+
+
+        int futureNumberOfQuotes = currentNumberOfQuotes - data.getNumberOfQuotes();
+
+        if(futureNumberOfQuotes >= 0) {
+            seller.creditQuote(quote.getPrice(), data.getNumberOfQuotes());
+            UserQuotes dataToSave = new UserQuotes(data.getId(), seller, quote, currentAveragePrice, futureNumberOfQuotes);
+            dataToSave = userQuotesReposittory.save(dataToSave);
+
+            if(futureNumberOfQuotes == 0)
+                userQuotesReposittory.delete(dataToSave);
+
+            return dataToSave;
+        }
+
+        return null;
+    }
 }

@@ -2,6 +2,7 @@ package com.luizfrra.stockSim.Controllers.User;
 
 import com.luizfrra.stockSim.Controllers.Commons.BaseController;
 import com.luizfrra.stockSim.DTOs.User.UserDTO;
+import com.luizfrra.stockSim.DTOs.UserQuotes.OperationType;
 import com.luizfrra.stockSim.DTOs.UserQuotes.UserQuotesDTO;
 import com.luizfrra.stockSim.EntitiesDomain.User.User;
 import com.luizfrra.stockSim.EntitiesDomain.UserQuotes.UserQuotes;
@@ -23,9 +24,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserController extends BaseController<User, UserDTO> {
 
     @Autowired
-    public ApplicationContext applicationContext;
-
-    @Autowired
     public UserQuotesService userQuotesService;
 
     @Autowired
@@ -35,7 +33,7 @@ public class UserController extends BaseController<User, UserDTO> {
         super(userService, UserController.class);
     }
 
-    @PostMapping("/buyquote")
+    @PostMapping("/quote")
     public ResponseEntity buyQuote(@RequestBody UserQuotesDTO userQuotesDTO) {
 
         SecurityContext securityContext = SecurityContextHolder.getContext();
@@ -50,7 +48,12 @@ public class UserController extends BaseController<User, UserDTO> {
         userQuotes.setId(new UserQuotesKey(userQuotesDTO.userId, userQuotesDTO.getSymbol()));
         userQuotes.setNumberOfQuotes(userQuotesDTO.quantity);
 
-        return new ResponseEntity(userQuotesService.save(userQuotes), HttpStatus.OK);
+        if(userQuotesDTO.operationType == OperationType.BUY)
+            userQuotes = userQuotesService.save(userQuotes);
+        else if(userQuotesDTO.operationType == OperationType.SELL)
+            userQuotes = userQuotesService.sellQuote(userQuotes);
+
+        return new ResponseEntity(userQuotes, HttpStatus.OK);
     }
 
     @Override

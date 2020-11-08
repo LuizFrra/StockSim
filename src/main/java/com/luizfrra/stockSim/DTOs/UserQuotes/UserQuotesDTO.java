@@ -19,7 +19,9 @@ public class UserQuotesDTO extends CommonDTO {
 
     public String symbol;
 
-    public  int quantity;
+    public int quantity;
+
+    public OperationType operationType;
 
     @JsonIgnore
     public boolean isValide() {

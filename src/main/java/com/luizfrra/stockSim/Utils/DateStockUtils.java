@@ -12,6 +12,7 @@ public class DateStockUtils {
     public static int NUMBER_OF_SECONDS_IN_A_MINUTE = 60;
     public static int SECONDS_PASSED_AFTER_10H = 36000;
     public static int SECONDS_PASSED_AFTER_17H_30M = 63000;
+    public static int CACHE_QUOTE_FOR_SECONDS = 3600;
 
     public static boolean isWeekDay(Instant instant) {
         DayOfWeek dayOfWeek = instant.atZone(ZoneId.systemDefault()).getDayOfWeek();
