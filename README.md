@@ -34,11 +34,12 @@ __/api/v1/user/{id}__
 __/api/v1/user/__
 * GET: Obtém todos os usuários do banco de dados.
 
-__/api/v1/user/buyquote__
+__/api/v1/user/quote__
 * POST: Realiza a compra da cota, é necessário enviar no body as seguintes informações :
 <ol>
   <li>quantity : Quantidade da cota</a></li>
   <li>symbol: Cota a ser adquirida</li>
+  <li>operationType: Operação a ser realizada BUY/1 ou SELL/0</li>
 </ol>
 Em um sistema com autenticação, o userId poderá ser pego através do cookie ou token.
 
