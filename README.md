@@ -25,21 +25,20 @@ Essa api tem como por objetivo realizar a simulação de compras e vendas de ati
 
 ## Endpoints para usuários
 
-__/api/v1/user__  - DEPRECATED ENDPOINT
-* POST: Cria um usuário. Deve ser enviado um request no formato JSON, contendo os campos: "email", "password", "firstName" e "lastName", sendo este último opcional.
-* DEPRECATED: Os usuários são criados agora através do keycloak.
+__/api/v1/user__  - NOT AVAIBLE ENDPOINT
+* NOT AVAIBLE: Os usuários são criados agora através do keycloak.
+
 __/api/v1/user/{id}__  
 * GET: Busca pelo o usuário através do ID passado por parâmetro na URL.
 
 __/api/v1/user/__
 * GET: Obtém todos os usuários do banco de dados.
 
-__/api/v1/user/{id}/buyquote__
+__/api/v1/user/buyquote__
 * POST: Realiza a compra da cota, é necessário enviar no body as seguintes informações :
 <ol>
   <li>quantity : Quantidade da cota</a></li>
   <li>symbol: Cota a ser adquirida</li>
-  <li>userId: usuário no qual a compra será efetuada</li>
 </ol>
 Em um sistema com autenticação, o userId poderá ser pego através do cookie ou token.
 
