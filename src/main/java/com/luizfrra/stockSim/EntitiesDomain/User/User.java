@@ -16,28 +16,15 @@ import java.util.Set;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Setter(value = AccessLevel.NONE)
-    private Long id;
-
-    @Column(nullable = false, length = 100)
-    private String firstName;
-
-    @Column(length = 100)
-    private String lastName;
+    private String id;
 
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(nullable = false)
-    private String password;
-
     @Column(columnDefinition = "Decimal(10,2) default 10000.00")
     @Setter(value = AccessLevel.NONE)
     private double cash = 10000.00;
-
-    @Column(columnDefinition = "boolean default true")
-    private boolean isActive = true;
 
     @OneToMany(mappedBy = "user")
     Set<UserQuotes> quotes;
@@ -45,13 +32,9 @@ public class User {
     @Version
     private Integer version;
 
-    //protected User() {}
-
-    public User(String firstName, String lastName, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public User(String id, String email) {
+        this.id = id;
         this.email = email;
-        this.password = password;
     }
 
     public double debitQuote(double value, int quantity) {
@@ -59,11 +42,4 @@ public class User {
         return cash - totalDebit;
     }
 
-    public void encodePassword(PasswordEncoder passwordEncoder) {
-        password = passwordEncoder.encode(password);
-    }
-
-    public void clearCredentials() {
-        this.password = "";
-    }
 }

@@ -12,9 +12,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.Optional;
 
 @Api
+@RolesAllowed("user")
 public abstract class BaseController<C, R extends CommonDTO> {
 
     IBaseService baseService;

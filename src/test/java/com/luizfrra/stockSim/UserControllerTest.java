@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
@@ -49,7 +50,7 @@ public class UserControllerTest {
 
         System.out.println(mvcResultFromSave.getResponse().getContentAsString());
 
-        Assert.assertEquals(201, mvcResultFromSave.getResponse().getStatus());
+        Assert.assertEquals(HttpStatus.CREATED.value(), mvcResultFromSave.getResponse().getStatus());
 
         ObjectResponse response = objectMapper.readValue(mvcResultFromSave.getResponse().getContentAsByteArray(),
                 ObjectResponse.class);
@@ -61,6 +62,6 @@ public class UserControllerTest {
 
         System.out.println(mvcResultFromGetById.getResponse().getContentAsString());
 
-        Assert.assertEquals(200, mvcResultFromGetById.getResponse().getStatus());
+        Assert.assertEquals(HttpStatus.OK.value(), mvcResultFromGetById.getResponse().getStatus());
     }
 }

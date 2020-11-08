@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Getter
 public class UserQuotesKey implements Serializable {
     @Column(name = "user_id")
-    Long userId;
+    String userId;
 
     @Column(name = "quote_id")
     String quotedId;
