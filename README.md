@@ -41,7 +41,6 @@ __/api/v1/user/quote__
   <li>symbol: Cota a ser adquirida</li>
   <li>operationType: Operação a ser realizada BUY/1 ou SELL/0</li>
 </ol>
-Em um sistema com autenticação, o userId poderá ser pego através do cookie ou token.
 
 ## Endpoints para as ações
 
