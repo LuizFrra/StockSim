@@ -33,7 +33,6 @@ public class UserControllerTest {
     @Autowired
     ObjectMapper objectMapper;
 
-    @Test
     public void givenUserService_whenSaveAndRetrieveEntity_thenOK() throws Exception {
 
         UserDTO userDTO = new UserDTO();
