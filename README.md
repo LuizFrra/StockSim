@@ -25,9 +25,9 @@ Essa api tem como por objetivo realizar a simulação de compras e vendas de ati
 
 ## Endpoints para usuários
 
-__/api/v1/user__  
+__/api/v1/user__  - DEPRECATED ENDPOINT
 * POST: Cria um usuário. Deve ser enviado um request no formato JSON, contendo os campos: "email", "password", "firstName" e "lastName", sendo este último opcional.
-
+* DEPRECATED: Os usuários são criados agora através do keycloak.
 __/api/v1/user/{id}__  
 * GET: Busca pelo o usuário através do ID passado por parâmetro na URL.
 
