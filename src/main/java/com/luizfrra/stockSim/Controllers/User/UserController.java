@@ -11,13 +11,19 @@ import com.luizfrra.stockSim.Services.User.UserService;
 import com.luizfrra.stockSim.Services.UserQuotes.UserQuotesService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserController extends BaseController<User, UserDTO> {
+
+    @Autowired
+    public ApplicationContext applicationContext;
 
     @Autowired
     public UserQuotesService userQuotesService;
@@ -29,8 +35,13 @@ public class UserController extends BaseController<User, UserDTO> {
         super(userService, UserController.class);
     }
 
-    @PostMapping("/{id}/buyquote")
+    @PostMapping("/buyquote")
     public ResponseEntity buyQuote(@RequestBody UserQuotesDTO userQuotesDTO) {
+
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        String userId = securityContext.getAuthentication().getName();
+
+        userQuotesDTO.setUserId(userId);
 
         if(!userQuotesDTO.isValide())
             return new ResponseEntity(new InvalidFieldsResponse(userQuotesDTO.getValidationErros()), HttpStatus.BAD_REQUEST);
@@ -42,6 +53,11 @@ public class UserController extends BaseController<User, UserDTO> {
         return new ResponseEntity(userQuotesService.save(userQuotes), HttpStatus.OK);
     }
 
+    @Override
+    @PostMapping
+    public ResponseEntity save(UserDTO dto) {
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
+    }
 
     @Override
     public User convertFromDtoToMain(UserDTO dto) {

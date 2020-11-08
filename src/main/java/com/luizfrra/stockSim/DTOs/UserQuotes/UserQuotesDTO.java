@@ -15,7 +15,7 @@ import java.util.HashMap;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserQuotesDTO extends CommonDTO {
-    public long userId;
+    public String userId;
 
     public String symbol;
 
@@ -29,8 +29,8 @@ public class UserQuotesDTO extends CommonDTO {
         if(StringStockUtils.isNullOrEmptyOrOnlyWhiteSpace(symbol)) {
             validationErros.put("symbol", "Symbol Is Empty");
             isValide = false;
-        } else if(userId <= 0) {
-            validationErros.put("userId", "UserId need be greater than 0");
+        } else if(StringStockUtils.isNullOrEmptyOrOnlyWhiteSpace(userId)) {
+            validationErros.put("userId", "Invalid UserId");
             isValide = false;
         } else if(quantity <= 0) {
             validationErros.put("userId", "quantity need be greater than 0");

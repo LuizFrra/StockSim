@@ -1,0 +1,47 @@
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          r2dbc: DEBUG
+
+myvm.ip: 192.168.0.18
+
+basicAuth:
+  endpoint: "/api/basicauth"
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${myvm.ip}:5432/stocksim
+    username: pro
+    password: pro
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+  rabbitmq:
+    host: ${myvm.ip}
+    port: 5672
+    username: guest
+    password: guest
+    listener:
+      simple:
+        prefetch: 1
+      direct:
+        prefetch: 1
+
+
+keycloak:
+  realm: stockSim
+  auth-server-url: http://${myvm.ip}:8080/auth
+  ssl-required: external
+  resource: stocksim-api
+  credentials:
+    secret: 99d98eb0-2115-4afb-ae0a-d7b522c9facc
+  use-resource-role-mappings: true
+  bearer-only: false
+  enable-basic-auth: true
+
+
+

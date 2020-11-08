@@ -22,12 +22,12 @@ public class StockSimApplication {
 	}
 
 	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder(12);
-	}
+	public ModelMapper modelMapper() { return new ModelMapper(); }
 
 	@Bean
-	public ModelMapper modelMapper() { return new ModelMapper(); }
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
 	@Bean
 	public RestTemplate restTemplate(RestTemplateBuilder builder) {
@@ -39,4 +39,5 @@ public class StockSimApplication {
 		hgapiConsumer.restTemplate = restTemplate;
 		return hgapiConsumer;
 	}
+
 }
