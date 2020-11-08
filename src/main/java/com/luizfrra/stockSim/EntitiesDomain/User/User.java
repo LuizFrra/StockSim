@@ -39,7 +39,8 @@ public class User {
 
     public double debitQuote(double value, int quantity) {
         double totalDebit = value * quantity;
-        return cash - totalDebit;
+        cash -= totalDebit;
+        return cash;
     }
 
 }
