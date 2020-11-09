@@ -3,6 +3,8 @@ package com.luizfrra.stockSim.Services.UserQuotes;
 import com.luizfrra.stockSim.EntitiesDomain.Quote.Quote;
 import com.luizfrra.stockSim.EntitiesDomain.User.User;
 import com.luizfrra.stockSim.EntitiesDomain.UserQuotes.UserQuotes;
+import com.luizfrra.stockSim.Exceptions.NotMeetRequisitesException;
+import com.luizfrra.stockSim.Exceptions.QuoteNotExistException;
 import com.luizfrra.stockSim.Repositories.UserQuotes.UserQuotesReposittory;
 import com.luizfrra.stockSim.Services.Commons.IBaseService;
 import com.luizfrra.stockSim.Services.Quote.QuoteService;
@@ -35,8 +37,13 @@ public class UserQuotesService implements IBaseService<UserQuotes, String> {
     @Override
     public UserQuotes save(UserQuotes data) {
         String symbol = data.getId().getQuotedId();
-        Quote quote = (Quote) quoteService.findById(symbol).get();
+        Optional<Quote> quoteOp = quoteService.findById(symbol);
         User buyer = userService.findById(data.getId().getUserId().toString()).get();
+
+        if(quoteOp.isEmpty())
+            throw new QuoteNotExistException("The Quote That You Would Like To Buy Not Exist", data);
+
+        Quote quote = quoteOp.get();
 
         UserQuotes currentDataQuote = null;
 
@@ -56,9 +63,10 @@ public class UserQuotesService implements IBaseService<UserQuotes, String> {
         if(buyer.debitQuote(quote.getPrice(), data.getNumberOfQuotes()) >= 0) {
             UserQuotes dataToSave = new UserQuotes(data.getId(), buyer, quote, totalAveragePrice, totalNumberOfQuotes);
             return userQuotesReposittory.save(dataToSave);
+        } else {
+            throw new NotMeetRequisitesException("You Haven't Enought Money To That Buy Quote", data);
         }
 
-        return null;
     }
 
     @Override
@@ -72,8 +80,14 @@ public class UserQuotesService implements IBaseService<UserQuotes, String> {
     public UserQuotes sellQuote(UserQuotes data) {
 
         String symbol = data.getId().getQuotedId();
-        Quote quote = (Quote) quoteService.findById(symbol).get();
+        Optional<Quote> quoteOp = quoteService.findById(symbol);
+
         User seller = userService.findById(data.getId().getUserId()).get();
+
+        if(quoteOp.isEmpty())
+            throw new QuoteNotExistException("The Quote that you would like to sell not exist", data);
+
+        Quote quote = quoteOp.get();
 
         UserQuotes currentDataQuote = null;
 
@@ -97,8 +111,8 @@ public class UserQuotesService implements IBaseService<UserQuotes, String> {
                 userQuotesReposittory.delete(dataToSave);
 
             return dataToSave;
+        } else {
+            throw new NotMeetRequisitesException("You Haven't Enough Quotes to Sell", data);
         }
-
-        return null;
     }
 }

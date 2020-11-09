@@ -1,6 +1,7 @@
 package com.luizfrra.stockSim.Services.Quote;
 
 import com.luizfrra.stockSim.EntitiesDomain.Quote.Quote;
+import com.luizfrra.stockSim.Exceptions.DataAlreadyExistException;
 import com.luizfrra.stockSim.HGBrasil.HGAPIConsumer;
 import com.luizfrra.stockSim.Repositories.Quote.QuoteRepository;
 import com.luizfrra.stockSim.Services.Commons.IBaseService;
@@ -31,17 +32,15 @@ public class QuoteService implements IBaseService<Quote, String> {
     }
 
     @Override
-    public Quote save(Quote quote) throws ConstraintViolationException {
+    public Quote save(Quote quote) {
         Optional<Quote> quoteDb = quoteRepository.findBySymbol(quote.getSymbol());
+
+        if(quoteDb.isPresent())
+            throw new DataAlreadyExistException("Data Already Exist", quote);
 
         if(quoteDb.isEmpty() && !StringStockUtils.isNullOrEmptyOrOnlyWhiteSpace(quote.getSymbol())) {
             Quote quoteResult = hgapiConsumer.getQuote(quote.getSymbol());
-            try {
-                Quote saved = quoteRepository.save(quoteResult);
-                return saved;
-            } catch (ConstraintViolationException ex) {
-                throw new ConstraintViolationException("Data Already Exist", ex.getSQLException(), ex.getConstraintName());
-            }
+            return quoteRepository.save(quoteResult);
         }
 
         return null;

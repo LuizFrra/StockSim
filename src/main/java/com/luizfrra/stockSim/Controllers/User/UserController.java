@@ -34,7 +34,7 @@ public class UserController extends BaseController<User, UserDTO> {
     }
 
     @PostMapping("/quote")
-    public ResponseEntity buyQuote(@RequestBody UserQuotesDTO userQuotesDTO) {
+    public ResponseEntity operateQuote(@RequestBody UserQuotesDTO userQuotesDTO) {
 
         SecurityContext securityContext = SecurityContextHolder.getContext();
         String userId = securityContext.getAuthentication().getName();
