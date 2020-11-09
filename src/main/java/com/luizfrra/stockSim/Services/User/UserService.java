@@ -1,6 +1,7 @@
 package com.luizfrra.stockSim.Services.User;
 
 import com.luizfrra.stockSim.EntitiesDomain.User.User;
+import com.luizfrra.stockSim.Exceptions.DataAlreadyExistException;
 import com.luizfrra.stockSim.Repositories.User.UserRepository;
 import com.luizfrra.stockSim.Services.Commons.IBaseService;
 import org.hibernate.exception.ConstraintViolationException;
@@ -20,28 +21,26 @@ public class UserService implements IBaseService<User, String> {
 
     private Logger logger = LoggerFactory.getLogger(UserService.class);
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Override
     public Optional<User> findById(String id) {
+
         return userRepository.findById(id);
     }
 
     @Override
     public User save(User user) throws ConstraintViolationException {
 
-        if(userRepository.findByEmail(user.getEmail()).isEmpty()) {
-            try {
-                User userSaved = userRepository.save(user);
-                return userSaved;
-            } catch (ConstraintViolationException ex) {
-                throw new ConstraintViolationException("Data Already Exist", ex.getSQLException(), ex.getConstraintName());
-            }
-        }
+        Optional<User> userDb = userRepository.findByEmail(user.getEmail());
 
-        return null;
+        if(userDb.isPresent())
+            throw new DataAlreadyExistException("Data Already Exist", user);
+
+        return userRepository.save(user);
+
     }
 
     @Override

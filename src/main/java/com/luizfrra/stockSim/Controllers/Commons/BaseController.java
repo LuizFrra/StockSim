@@ -33,16 +33,7 @@ public abstract class BaseController<C, R extends CommonDTO> {
         if(!dto.isValide())
             return new ResponseEntity(new InvalidFieldsResponse(dto.getValidationErros()), HttpStatus.BAD_REQUEST);
 
-        C data = null;
-        try {
-            data = (C) baseService.save(convertFromDtoToMain(dto));
-        } catch (ConstraintViolationException e) {
-            e.printStackTrace();
-            return new ResponseEntity(new ObjectResponse("Data Already Exist", dto), HttpStatus.CONFLICT);
-        }
-
-        if(data == null)
-            return new ResponseEntity(new ObjectResponse("Data Cannot Be Saved", dto), HttpStatus.CONFLICT);
+        C data = (C) baseService.save(convertFromDtoToMain(dto));
 
         dto = convertFromMainToDto(data);
 
