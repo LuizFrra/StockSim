@@ -7,10 +7,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
+@EnableFeignClients
 public class StockSimApplication {
 
 	private final Logger logger = LoggerFactory.getLogger(StockSimApplication.class);
@@ -20,7 +22,9 @@ public class StockSimApplication {
 	}
 
 	@Bean
-	public ModelMapper modelMapper() { return new ModelMapper(); }
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
+	}
 
 	@Bean
 	public RestTemplate restTemplate(RestTemplateBuilder builder) {

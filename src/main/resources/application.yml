@@ -11,6 +11,8 @@ basicAuth:
   endpoint: "/api/basicauth"
 
 spring:
+  application:
+    name: stockSim-api
   datasource:
     url: jdbc:postgresql://${myvm.ip}:5432/stocksim
     username: pro
@@ -42,6 +44,26 @@ keycloak:
   use-resource-role-mappings: true
   bearer-only: false
   enable-basic-auth: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      expose: "*"
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8100/eureka/
+
+feign:
+  client:
+    config:
+      default:
+        readTimeout: 160000000
 
 
 
