@@ -4,10 +4,12 @@ import com.luizfrra.stockSim.Controllers.Commons.BaseController;
 import com.luizfrra.stockSim.DTOs.User.UserDTO;
 import com.luizfrra.stockSim.DTOs.UserQuotes.OperationType;
 import com.luizfrra.stockSim.DTOs.UserQuotes.UserQuotesDTO;
+import com.luizfrra.stockSim.EntitiesDomain.Message.Message;
 import com.luizfrra.stockSim.EntitiesDomain.User.User;
 import com.luizfrra.stockSim.EntitiesDomain.UserQuotes.UserQuotes;
 import com.luizfrra.stockSim.EntitiesDomain.UserQuotes.UserQuotesKey;
 import com.luizfrra.stockSim.Responses.InvalidFieldsResponse;
+import com.luizfrra.stockSim.Services.Email.IEmailService;
 import com.luizfrra.stockSim.Services.User.UserService;
 import com.luizfrra.stockSim.Services.UserQuotes.UserQuotesService;
 import org.modelmapper.ModelMapper;
@@ -24,6 +26,9 @@ import org.springframework.web.bind.annotation.*;
 public class UserController extends BaseController<User, UserDTO> {
 
     @Autowired
+    public IEmailService emailService;
+
+    @Autowired
     public UserQuotesService userQuotesService;
 
     @Autowired
@@ -35,7 +40,7 @@ public class UserController extends BaseController<User, UserDTO> {
 
     @PostMapping("/quote")
     public ResponseEntity operateQuote(@RequestBody UserQuotesDTO userQuotesDTO) {
-
+        //emailService.sendEmail(new Message("luizalex202@hotmail.com", "carai pcr", "nd de spam n irmao"));
         SecurityContext securityContext = SecurityContextHolder.getContext();
         String userId = securityContext.getAuthentication().getName();
 
