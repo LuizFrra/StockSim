@@ -21,6 +21,9 @@ public class RabbitStartUp {
         return new Queue("emailHistory", true, false, false);
     }
 
+    @Bean("stockSim")
+    Queue stockSim() { return new Queue("stockSim", true, false, false); }
+
     @Bean
     FanoutExchange fanoutExchange()  {
         return new FanoutExchange("stocksim.email", true, false);
