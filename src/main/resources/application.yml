@@ -53,7 +53,7 @@ keycloak:
   ssl-required: external
   resource: stocksim-api
   credentials:
-    secret: 99d98eb0-2115-4afb-ae0a-d7b522c9facc
+    secret: 2f0fb327-4fe0-4a94-9735-f8961c262607
   use-resource-role-mappings: true
   bearer-only: false
   enable-basic-auth: true
