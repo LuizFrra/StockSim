@@ -21,7 +21,7 @@ services:
 
   keycloak:
     container_name: stockSim-keycloak
-    image: srpoe/keycloak
+    image: srpoe/stocksimkeycloak
     environment:
       DB_VENDOR: POSTGRES
       DB_ADDR: postgres-keycloack
@@ -31,6 +31,9 @@ services:
       DB_PASSWORD: pro
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
+      KEYCLOAK_IMPORT: /tmp/realm-export.json
+    volumes:
+      - ./realm-export.json:/tmp/realm-export.json
     ports:
       - 8080:8080
     depends_on:
@@ -38,8 +41,7 @@ services:
       - rabbitmq
 
   rabbitmq:
-    image: srpoe/stocksimrabbitmq
-    container_name: stockSim_rabbitmq
+    image: rabbitmq:3.8-management
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
@@ -48,7 +50,6 @@ services:
       - 15672:15672
 
   postgres-stocksim:
-    container_name: stocksim-db
     image: postgres:13-alpine
     volumes:
       - postgres_stocksimapi:/var/lib/postgresql/data
@@ -65,7 +66,10 @@ services:
       - 8070:80
     environment:
       my.keycloak.container.name: "stockSim-keycloak"
-      my.postgres.container.name: "stocksim-db"
+      my.postgres.container.name: "postgres-stocksim"
+      my.serverregistry.container.port: "80"
+      my.serverregistry.container.name: "stocksim-server-registry"
+      my.rabbitmq.container.name: "rabbitmq"
     depends_on:
       - keycloak
       - postgres-stocksim
@@ -79,18 +83,18 @@ services:
       - 8090:80
     environment:
       spring.mail.host: "YOUR SMTP EMAIL"
-      spring.mail.username: "YOUR EMAIL"
+      spring.mail.username: "YOUR EMAIL "
       spring.mail.password: "YOUR EMAIL PASSWORD"
       my.serverregistry.container.port: "80"
+      my.serverregistry.container.name: "stocksim-server-registry"
+      my.rabbitmq.container.name: "rabbitmq"
     depends_on:
       - keycloak
       - postgres-stocksim
       - rabbitmq
       - stocksim-server-registry
 
-
   stocksim-server-registry:
-    container_name: stockSimServerRegistry
     image: srpoe/stocksimserverregistry
     ports:
       - 8100:80
