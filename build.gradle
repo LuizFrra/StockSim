@@ -21,6 +21,9 @@ repositories {
 dependencies {
 	implementation 'junit:junit:4.12'
 
+	compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-hystrix', version: '2.2.6.RELEASE'
+	//compile group: 'io.github.resilience4j', name: 'resilience4j-spring-boot2', version: '1.6.0'
+
 	compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '2.2.5.RELEASE'
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '2.3.5.RELEASE'
 	compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client', version: '2.2.5.RELEASE'

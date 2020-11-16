@@ -49,6 +49,7 @@ public class UserController extends BaseController<User, UserDTO> {
         String email = keycloakCtx.getToken().getEmail();
         String userId = securityContext.getAuthentication().getName();
         userQuotesDTO.setUserId(userId);
+        int numberOfQuotes = userQuotesDTO.getQuantity();
 
         if(!userQuotesDTO.isValide())
             return new ResponseEntity(new InvalidFieldsResponse(userQuotesDTO.getValidationErros()), HttpStatus.BAD_REQUEST);
@@ -62,13 +63,13 @@ public class UserController extends BaseController<User, UserDTO> {
         if(userQuotesDTO.operationType == OperationType.BUY) {
             userQuotes = userQuotesService.save(userQuotes);
             text = "Compra de Ativo";
-            subject = "Compra de " + userQuotes.getNumberOfQuotes() + " Ativos " +
+            subject = "Compra de " + numberOfQuotes + " Ativos " +
                     userQuotes.getQuote().getSymbol() + " Realizada";
         }
         else if(userQuotesDTO.operationType == OperationType.SELL) {
             userQuotes = userQuotesService.sellQuote(userQuotes);
             text = "Venda de Ativo";
-            subject = "Venda de " + userQuotes.getNumberOfQuotes() + " Ativos " +
+            subject = "Venda de " + numberOfQuotes + " Ativos " +
                     userQuotes.getQuote().getSymbol() + " Realizada";
         }
 

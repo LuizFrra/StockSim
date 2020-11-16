@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@FeignClient("stockSim-Email")
+@FeignClient(value = "stockSim-Email", fallbackFactory = EmailServiceFallback.class)
 public interface IEmailService {
 
     @RequestMapping(method = RequestMethod.POST, value = "/api/v1/email")

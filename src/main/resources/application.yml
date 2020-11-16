@@ -7,14 +7,27 @@ logging:
 
 myvm.ip: 192.168.0.18
 
+my.rabbitmq.container.name: stockSim_rabbitmq
+my.serverregistry.container.name: stockSimServerRegistry
+my.serverregistry.container.port: 80
+my.keycloak.container.name: desktop_keycloak_1
+my.postgres.container.name: stocksim
+
+server:
+  port: 80
+
 basicAuth:
   endpoint: "/api/basicauth"
 
 spring:
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
   application:
     name: stockSim-api
   datasource:
-    url: jdbc:postgresql://${myvm.ip}:5432/stocksim
+    url: jdbc:postgresql://${my.postgres.container.name}:5432/stocksim
     username: pro
     password: pro
   jpa:
@@ -23,7 +36,7 @@ spring:
     hibernate:
       ddl-auto: update
   rabbitmq:
-    host: ${myvm.ip}
+    host: ${my.rabbitmq.container.name}
     port: 5672
     username: guest
     password: guest
@@ -36,7 +49,7 @@ spring:
 
 keycloak:
   realm: stockSim
-  auth-server-url: http://${myvm.ip}:8080/auth
+  auth-server-url: http://${my.keycloak.container.name}:8080/auth
   ssl-required: external
   resource: stocksim-api
   credentials:
@@ -57,13 +70,23 @@ eureka:
     preferIpAddress: true
   client:
     serviceUrl:
-      defaultZone: http://localhost:8100/eureka/
+      defaultZone: http://${my.serverregistry.container.name}:${my.serverregistry.container.port}/eureka/
 
 feign:
+  hystrix:
+    enabled: true
   client:
     config:
       default:
         readTimeout: 160000000
+
+hystrix:
+  command:
+    default:
+      circuitBreaker:
+        requestVolumeThreshold: 5
+        errorThresholdPercentage: 50
+        sleepWindowInMilliseconds: 2000
 
 
 
