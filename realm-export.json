@@ -772,7 +772,7 @@
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "secret": "**********",
+      "secret": "2f0fb327-4fe0-4a94-9735-f8961c262607",
       "defaultRoles": [
         "user"
       ],
