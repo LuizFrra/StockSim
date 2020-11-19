@@ -1,4 +1,4 @@
-FROM openjdk:11
+FROM openjdk:11.0-jdk-slim as build
 
 WORKDIR /stockSimApi-build
 
@@ -10,11 +10,11 @@ RUN chmod +x gradlew
 
 RUN ./gradlew build
 
+FROM openjdk:11-jre-slim as run
+
 WORKDIR /stockSimApi
 
-RUN cp /stockSimApi-build/build/libs/*.jar /stockSimApi/app.jar
-
-RUN rm -rf /stockSimApi-build
+COPY --from=build /stockSimApi-build/build/libs/*.jar /stockSimApi/app.jar
 
 RUN ls -al
 
