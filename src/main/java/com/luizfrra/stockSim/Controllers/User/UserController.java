@@ -42,7 +42,6 @@ public class UserController extends BaseController<User, UserDTO> {
 
     @PostMapping("/quote")
     public ResponseEntity operateQuote(@RequestBody UserQuotesDTO userQuotesDTO) {
-
         SecurityContext securityContext = SecurityContextHolder.getContext();
         RefreshableKeycloakSecurityContext keycloakCtx = (RefreshableKeycloakSecurityContext) securityContext
                 .getAuthentication().getCredentials();

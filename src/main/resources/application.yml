@@ -74,19 +74,27 @@ eureka:
 
 feign:
   hystrix:
-    enabled: true
+    enabled: disabled
   client:
     config:
       default:
         readTimeout: 160000000
 
-hystrix:
-  command:
-    default:
-      circuitBreaker:
-        requestVolumeThreshold: 5
-        errorThresholdPercentage: 50
-        sleepWindowInMilliseconds: 2000
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        registerHealthIndicator: true
+        slidingWindowSize: 10000
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 1
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 10s
+        failureRateThreshold: 50
+        eventConsumerBufferSize: 10
+    instances:
+      stockSim-Email:
+        baseConfig: default
 
 
 
