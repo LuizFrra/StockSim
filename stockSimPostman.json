@@ -1,0 +1,291 @@
+{
+	"info": {
+		"_postman_id": "6b5b3862-e127-4ac3-b4fe-5e18bdfd5951",
+		"name": "stockSim",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "BEARER {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://{{connectAddress}}/api/v1/user/UUID",
+							"protocol": "http",
+							"host": [
+								"{{connectAddress}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"UUID"
+							]
+						},
+						"description": "Nesse Endpoint é possível obter informações a respeito de um usuário específico, deve ser realizado uma requisição do tipo GET, passando como parâmetro o UUID do usuário desejado."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "http://{{connectAddress}}/api/v1/user/",
+							"protocol": "http",
+							"host": [
+								"{{connectAddress}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								""
+							]
+						},
+						"description": "Nesse EndPoint é possível listar e obter as informações de todos os usuários cadastrados na aplicação."
+					},
+					"response": []
+				},
+				{
+					"name": "Buy Quote",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "BEARER {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"symbol\": \"MGLU3\",\r\n    \"quantity\": 50,\r\n    \"operationType\": \"BUY\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{connectAddress}}/api/v1/user/quote",
+							"protocol": "http",
+							"host": [
+								"{{connectAddress}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"quote"
+							]
+						},
+						"description": "Nesse EndPoint é possível realizar a compra/venda de um ativo previamente cadastrado no banco de dados da aplicação, para a compra deve ser passado para o atributo \"operationType\" um dos seguintes valores: 1 ou \"BUY\". Após a compra ser realizada com sucesso, será disparado um e-mail para o usuário que realizou a compra, nesse e-mail é informado o ativo comprado e a quantidade."
+					},
+					"response": []
+				},
+				{
+					"name": "Sell Quote",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "BEARER {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"symbol\": \"MXRF11\",\r\n    \"quantity\": 200,\r\n    \"operationType\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{connectAddress}}/api/v1/user/quote",
+							"protocol": "http",
+							"host": [
+								"{{connectAddress}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"quote"
+							]
+						},
+						"description": "Nesse EndPoint é possível realizar a compra/venda de um ativo previamente cadastrado no banco de dados da aplicação, para a compra deve ser passado para o atributo \"operationType\" um dos seguintes valores: 0 ou \"SELL\". Após a venda ser realizada com sucesso, será disparado um e-mail para o usuário que realizou a venda, nesse e-mail é informado o ativo vendido e a quantidade."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Quote",
+			"item": [
+				{
+					"name": "Create Quote",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "BEARER {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"symbol\": \"MXRF11\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{connectAddress}}/api/v1/quote",
+							"protocol": "http",
+							"host": [
+								"{{connectAddress}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"quote"
+							]
+						},
+						"description": "Nesse EndPoint é possível incluir um ativo da bolsa de valores no banco de dados da aplicação, para isso basta enviar uma requsição do tipo POST contendo no atributo symbol o código do ativo desejado na base de dados."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Quote",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "BEARER {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://{{connectAddress}}/api/v1/quote/PETR4",
+							"protocol": "http",
+							"host": [
+								"{{connectAddress}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"quote",
+								"PETR4"
+							]
+						},
+						"description": "Nesse EndPoint é possível obter informações a respeito de um determinado ativo previamente incluído no banco de dados, bastando apenas passar o código do mesmo como parâmetro na URL."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Quotes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "BEARER {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://{{connectAddress}}/api/v1/quote",
+							"protocol": "http",
+							"host": [
+								"{{connectAddress}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"quote"
+							]
+						},
+						"description": "Nesse EndPoint é possível listar e obter informações a respeito de todos ativos previamente cadastrados no banco de dados."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Security",
+			"item": [
+				{
+					"name": "Basic Authentication EndPoint",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "luiz",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "luiz",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic dXNlcjE6bHVpejEyMw==",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://{{connectAddress}}/api/basicauth",
+							"protocol": "http",
+							"host": [
+								"{{connectAddress}}"
+							],
+							"path": [
+								"api",
+								"basicauth"
+							]
+						},
+						"description": "Nesse EndPoint é realizado a autenticação utilizando O Basic Auth, portanto aqui é enviado no Header Authorization contendo o login e senha no seguinte formato: 'BASIC login:senha', esses dados devem ser codificado para base 64 conforme o Padrão MIME."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

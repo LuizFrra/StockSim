@@ -9,7 +9,7 @@ Uma API que estou construíndo para propósitos de estudos, juntando duas coisas
 ## Objetivo
 
 Essa api tem como por objetivo realizar a simulação de compras e vendas de ativos na bolsa de valores, para alcançar o objetivo desejado, irei utilizar uma API externa para acompanhar a cotação da  bolsa, por enquanto a api será a <a href="https://hgbrasil.com/">HG BRASIL<a/>, essa API permite realizar 400 request por dia, portanto o acompanhamento dos ativos precisam ser bem distribuídos, impedindo que seja realizado em tempo real.
-  
+
 ## Tecnologias Utilizadas
 <ol>
   <li><a href="https://spring.io/projects/spring-boot">Spring Boot</a></li>
@@ -23,35 +23,209 @@ Essa api tem como por objetivo realizar a simulação de compras e vendas de ati
 
 # Utilizando API
 
-## Endpoints para usuários
+# 📁 Coleção: User 
 
-__/api/v1/user__  - NOT AVAIBLE ENDPOINT
-* NOT AVAIBLE: Os usuários são criados agora através do keycloak.
 
-__/api/v1/user/{id}__  
-* GET: Busca pelo o usuário através do ID passado por parâmetro na URL.
+## End-point: Get User
 
-__/api/v1/user/__
-* GET: Obtém todos os usuários do banco de dados.
+### Descrição: Nesse Endpoint é possível obter informações a respeito de um usuário específico, deve ser realizado uma requisição do tipo GET, passando como parâmetro o UUID do usuário desejado.
 
-__/api/v1/user/quote__
-* POST: Realiza a compra da cota, é necessário enviar no body as seguintes informações :
-<ol>
-  <li>quantity : Quantidade da cota</a></li>
-  <li>symbol: Cota a ser adquirida</li>
-  <li>operationType: Operação a ser realizada BUY/1 ou SELL/0</li>
-</ol>
+Método: GET
 
-## Endpoints para as ações
+>```
+>http://{{connectAddress}}/api/v1/user/UUID
+>```
 
-__/api/v1/quote__  
-* POST: Adiciona uma ação. Deve ser enviado um request no formato JSON, contendo o campo: "symbol", que corresponde ao ticket da ação a ser adicionado, exemplo: MGLU3, ITUB4.
+### Headers
 
-__/api/v1/quote/{symbol}__  
-* GET: Busca pela a ação passado por parâmetro na URL.
+| Content-Type  | Value            |
+| ------------- | ---------------- |
+| Authorization | BEARER {{token}} |
 
-__/api/v1/quote/__
-* GET: Busca por todas as ações no banco de dados.
+
+
+⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
+
+
+## End-point: Get All Users
+
+### Descrição: Nesse EndPoint é possível listar e obter as informações de todos os usuários cadastrados na aplicação.
+
+Método: GET
+
+>```
+>http://{{connectAddress}}/api/v1/user/
+>```
+
+### Headers
+
+| Content-Type  | Value            |
+| ------------- | ---------------- |
+| Authorization | Bearer {{token}} |
+
+
+
+⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
+
+
+## End-point: Buy Quote
+
+### Descrição: Nesse EndPoint é possível realizar a compra/venda de um ativo previamente cadastrado no banco de dados da aplicação, para a compra deve ser passado para o atributo "operationType" um dos seguintes valores: 1 ou "BUY". Após a compra ser realizada com sucesso, será disparado um e-mail para o usuário que realizou a compra, nesse e-mail é informado o ativo comprado e a quantidade.
+
+Método: POST
+
+>```
+>http://{{connectAddress}}/api/v1/user/quote
+>```
+
+### Headers
+
+| Content-Type  | Value            |
+| ------------- | ---------------- |
+| Authorization | BEARER {{token}} |
+
+
+### Body (**raw**)
+
+```json
+{
+    "symbol": "MGLU3",
+    "quantity": 50,
+    "operationType": "BUY"
+}
+```
+
+
+⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
+
+
+## End-point: Sell Quote
+
+### Descrição: Nesse EndPoint é possível realizar a compra/venda de um ativo previamente cadastrado no banco de dados da aplicação, para a compra deve ser passado para o atributo "operationType" um dos seguintes valores: 0 ou "SELL". Após a venda ser realizada com sucesso, será disparado um e-mail para o usuário que realizou a venda, nesse e-mail é informado o ativo vendido e a quantidade.
+
+Método: POST
+
+>```
+>http://{{connectAddress}}/api/v1/user/quote
+>```
+
+### Headers
+
+| Content-Type  | Value            |
+| ------------- | ---------------- |
+| Authorization | BEARER {{token}} |
+
+
+### Body (**raw**)
+
+```json
+{
+    "symbol": "MXRF11",
+    "quantity": 200,
+    "operationType": 0
+}
+```
+
+
+⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
+
+# 📁 Coleção: Quote 
+
+
+## End-point: Create Quote
+
+### Descrição: Nesse EndPoint é possível incluir um ativo da bolsa de valores no banco de dados da aplicação, para isso basta enviar uma requsição do tipo POST contendo no atributo symbol o código do ativo desejado na base de dados.
+
+Método: POST
+
+>```
+>http://{{connectAddress}}/api/v1/quote
+>```
+
+### Headers
+
+| Content-Type  | Value            |
+| ------------- | ---------------- |
+| Authorization | BEARER {{token}} |
+
+
+### Body (**raw**)
+
+```json
+{
+    "symbol": "MXRF11"
+}
+```
+
+
+⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
+
+
+## End-point: Get Quote
+
+### Descrição: Nesse EndPoint é possível obter informações a respeito de um determinado ativo previamente incluído no banco de dados, bastando apenas passar o código do mesmo como parâmetro na URL.
+
+Método: GET
+
+>```
+>http://{{connectAddress}}/api/v1/quote/PETR4
+>```
+
+### Headers
+
+| Content-Type  | Value            |
+| ------------- | ---------------- |
+| Authorization | BEARER {{token}} |
+
+
+
+⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
+
+
+## End-point: Get All Quotes
+
+### Descrição: Nesse EndPoint é possível listar e obter informações a respeito de todos ativos previamente cadastrados no banco de dados.
+
+Método: GET
+
+>```
+>http://{{connectAddress}}/api/v1/quote
+>```
+
+### Headers
+
+| Content-Type  | Value            |
+| ------------- | ---------------- |
+| Authorization | BEARER {{token}} |
+
+
+
+⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃ ⁃
+
+# 📁 Coleção: Security 
+
+## End-point:  🔑  Basic Authentication EndPoint 
+
+### Descrição: Nesse EndPoint é realizado a autenticação utilizando O Basic Auth, portanto aqui é enviado no Header Authorization contendo o login e senha no seguinte formato: 'BASIC login:senha', esses dados devem ser codificado para base 64 conforme o Padrão MIME.
+
+Método: GET
+
+>```
+>http://{{connectAddress}}/api/basicauth
+>```
+
+### Headers
+
+| Content-Type  | Value                      |
+| ------------- | -------------------------- |
+| Authorization | Basic dXNlcjE6bHVpejEyMw== |
+
+
+### 
+
+_________________________________________________
+
+
 
 ## Estrutura do Projeto
 
