@@ -38,8 +38,8 @@ spring:
   rabbitmq:
     host: ${my.rabbitmq.container.name}
     port: 5672
-    username: guest
-    password: guest
+    username: admin
+    password: "{<BX>Q9samX3"
     listener:
       simple:
         prefetch: 1
